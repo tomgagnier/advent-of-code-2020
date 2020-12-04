@@ -5,12 +5,12 @@ class Passport < OpenStruct
     ([:ecl, :pid, :eyr, :hcl, :byr, :iyr, :hgt] - to_h.keys).empty?
   end
 
-  def valid_year?(year_key, min, max)
-    itself[year_key] =~ /^\d+$/ && itself[year_key].to_i.between?(min, max)
+  def valid_year?(year, min, max)
+    year =~ /^\d+$/ && year.to_i.between?(min, max)
   end
 
   def valid_height?
-    match = /^(?<height>\d+)(?<unit>cm|in)$/.match(itself[:hgt])
+    match = /^(?<height>\d+)(?<unit>cm|in)$/.match(hgt)
     return false unless match
     height = match[:height].to_i
     (match[:unit] == 'cm') ? height.between?(150, 193) : height.between?(59, 76)
@@ -18,13 +18,13 @@ class Passport < OpenStruct
 
   def valid?
     required_fields? &&
-      valid_year?(:byr, 1920, 2002) &&
-      valid_year?(:iyr, 2010, 2020) &&
-      valid_year?(:eyr, 2020, 2030) &&
+      valid_year?(byr, 1920, 2002) &&
+      valid_year?(iyr, 2010, 2020) &&
+      valid_year?(eyr, 2020, 2030) &&
       valid_height? &&
-      itself[:hcl] =~ /^#[0-9a-f]{6}$/ &&
-      itself[:ecl] =~ /^(amb|blu|brn|gry|grn|hzl|oth)$/ &&
-      itself[:pid] =~ /^\d{9}$/
+      hcl =~ /^#[0-9a-f]{6}$/ &&
+      ecl =~ /^(amb|blu|brn|gry|grn|hzl|oth)$/ &&
+      pid =~ /^\d{9}$/
   end
 end
 
