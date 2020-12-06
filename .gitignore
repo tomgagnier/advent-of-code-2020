@@ -1,0 +1,18 @@
+.*           # all dot files
+!.gitignore  # never ignore .gitignore
+*.iml        # Jetbrain's module files
+*.swp        # vi swap files
+
+
+
+# Added by cargo
+
+/target
+
+
+# Added by cargo
+#
+# already existing elements were commented out
+
+#/target
+Cargo.lock
