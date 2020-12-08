@@ -24,6 +24,12 @@ def read_bags(file)
     end
   end
 
+  def ancestors_of(bag, ancestors = [bag], candidates = itself)
+    return ancestors - [bag] if candidates.empty?
+    parents = candidates.reject { |k, bags| ancestors.include?(k) || (bags & ancestors).empty? }
+    ancestors_of(bag, ancestors + parents.keys, parents)
+  end
+
   File.readlines(file)
       .map { |l| l.strip.split(" bags contain ") }
       .map { |m| [to_symbol(m[0]), to_array_of_symbols(m[1])] }
@@ -32,7 +38,7 @@ end
 
 bags = read_bags('test-input.txt')
 
-p bags.keys.map { |bag| bags.walk(bag).find { |b| b == :shiny_gold } }.count
-
-p bags.walk(:shiny_gold).count
+bags.each { |e| p e }
+p '--------'
+p bags.ancestors_of(:shiny_gold)
 
