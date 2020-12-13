@@ -1,10 +1,12 @@
+require '../aoc'
+
 class Layout
   def initialize(grid)
     @grid = grid
   end
 
-  def self.read(file)
-    Layout.new(File.readlines(file).map(&:strip).reject(&:empty?).map(&:each_char).map(&:to_a))
+  def self.read(file_path)
+    Layout.new(read_lines(file_path).map(&:each_char).map(&:to_a))
   end
 
   def ==(o)

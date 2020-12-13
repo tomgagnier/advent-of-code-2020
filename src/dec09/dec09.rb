@@ -1,5 +1,7 @@
+require_relative '../aoc'
+
 def evaluate(file, preamble)
-  seq = File.readlines(file).map { |l| l.strip.to_i }
+  seq = read_lines(file).map(&:to_i)
 
   invalid = (preamble...seq.size)
               .map { |i| [seq[i], seq[i - preamble..i].combination(2)

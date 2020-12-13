@@ -1,7 +1,7 @@
-#!/usr/bin/env ruby
+require_relative '../aoc'
 
-matches = File.readlines('input.txt')
-              .map { |line| /(?<i>\d+)-(?<j>\d+) (?<character>.): (?<password>.*)/.match(line) }
+matches = read_lines('input.txt')
+            .map { |line| /(?<i>\d+)-(?<j>\d+) (?<character>.): (?<password>.*)/.match(line) }
 
 count = matches.count do |m|
   minimum = m[:i].to_i

@@ -1,4 +1,6 @@
-def read_stack(file)
+require '../aoc'
+
+def read_stack(file_path)
   def evaluate(pos = 0, acc = 0, visited = [])
     return [acc, pos >= size] if pos >= size || visited.include?(pos)
     visited << pos
@@ -29,11 +31,15 @@ def read_stack(file)
     result
   end
 
-  File.readlines(file)
-      .map { |l| l.strip.split(' ') }
-      .map { |instruction, scalar| [instruction.to_sym, scalar.to_i] }
+  read_lines(file_path)
+    .map { |l| l.split(' ') }
+    .map { |instruction, scalar| [instruction.to_sym, scalar.to_i] }
 end
 
-stack = read_stack('input.txt')
-p stack.evaluate
-p (0...stack.size).map { |pos| stack.patch(pos) }.find{|_, terminates| terminates}
+for file_path in %w(test-input.txt input.txt)
+  stack = read_stack(file_path)
+  p stack.evaluate
+  p (0...stack.size)
+      .map { |pos| stack.patch(pos) }
+      .find { |_, terminates| terminates }
+end

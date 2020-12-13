@@ -1,9 +1,6 @@
-##!/usr/bin/env ruby
+require '../aoc'
 
 def read_bags(file)
-  def to_symbol(s)
-    s.strip.gsub(' ', '_').to_sym
-  end
 
   def to_array_of_symbols(nested_bags)
     return [] if nested_bags == 'no other bags.'
@@ -30,15 +27,15 @@ def read_bags(file)
     ancestors_of(bag, ancestors + parents.keys, parents)
   end
 
-  File.readlines(file)
-      .map { |l| l.strip.split(" bags contain ") }
-      .map { |m| [to_symbol(m[0]), to_array_of_symbols(m[1])] }
-      .to_h
+  read_lines(file)
+    .map { |l| l.split(" bags contain ") }
+    .map { |m| [to_symbol(m[0]), to_array_of_symbols(m[1])] }
+    .to_h
 end
 
-bags = read_bags('test-input.txt')
+for file_path in %w(test-input.txt input.txt)
+  bags = read_bags(file_path)
 
-bags.each { |e| p e }
-p '--------'
-p bags.ancestors_of(:shiny_gold)
+  p bags.ancestors_of(:shiny_gold)
+end
 

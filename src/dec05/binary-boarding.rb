@@ -1,11 +1,11 @@
-def to_i(binary_code, zero_char)
-  binary_code.each_char.map { |c| c == zero_char ? 0 : 1 }.join.to_i(2)
-end
+require_relative '../aoc'
 
-seat_ids = File.readlines('input.txt')
-               .map { |partition_code| /(?<row>[FB]*)(?<column>[LR]*)/.match(partition_code) }
-               .map { |match| 8 * to_i(match[:row], 'F') + to_i(match[:column], 'L') }
-               .sort
+seat_ids = read_lines('input.txt')
+             .map { |partition_code| /(?<row>[FB]*)(?<column>[LR]*)/.match(partition_code) }
+             .map { |match| 8 *
+               binary_code_to_i(code: match[:row], zero_char: 'F') +
+               binary_code_to_i(code: match[:column], zero_char: 'L') }
+             .sort
 
 puts "Maximum Seat ID: #{seat_ids[-1]}"
 
