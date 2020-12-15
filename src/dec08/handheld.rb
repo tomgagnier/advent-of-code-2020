@@ -38,7 +38,7 @@ end
 
 for file_path in %w(test-input.txt input.txt)
   stack = read_stack(file_path)
-  p stack.evaluate
+  p stack.part_1
   p (0...stack.size)
       .map { |pos| stack.patch(pos) }
       .find { |_, terminates| terminates }
