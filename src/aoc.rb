@@ -71,7 +71,7 @@ end
 
 # A  in space with a directed magnitude
 class Ray
-  include Enumerable
+
 
   def initialize(slope:, origin: xy(0, 0))
     @slope = slope
