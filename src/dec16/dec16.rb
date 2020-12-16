@@ -9,8 +9,8 @@ end
 def parse(file_path)
   paragraphs = group_lines_by_paragraphs(file_path)
 
-  fields = paragraphs[0].map do |r|
-    m = /([^:]+): *(\d+)-(\d+) or (\d+)-(\d+)/.match(r)
+  fields = paragraphs[0].map do |field_definition|
+    m = /([^:]+): *(\d+)-(\d+) or (\d+)-(\d+)/.match(field_definition)
     name = m[1]
     range1 = (m[2].to_i..m[3].to_i)
     range2 = (m[4].to_i..m[5].to_i)
@@ -34,32 +34,26 @@ def part_1(file_path)
 end
 
 def part_2(file_path)
+
   fields, nearby_tickets, your_ticket = parse(file_path)
 
-  valid_tickets = nearby_tickets
-    .filter { |t| t.all? { |n| fields.any? { |f| f.include? n } } }
-
-  possible_field_names = valid_tickets
-    .map { |t| t.map { |n| fields.filter { |f| f.include?(n) }.map { |f| f.name } } }
-
-  position_name_lists = Array.new(fields.size, fields.map { |f| f.name })
-
-  possible_field_names.each do |list_of_list_of_names|
-    list_of_list_of_names.each_with_index do |list_of_names, i|
-      position_name_lists[i] &= list_of_names
-    end
-  end
+  position_names = nearby_tickets
+    .filter { |numbers| numbers.all? { |n| fields.any? { |f| f.include? n } } }
+    .map { |numbers| numbers.map { |n| fields.filter { |f| f.include?(n) }.map { |f| f.name } } }
+    .transpose
+    .map { |columns| columns.reduce(fields.map { |f| f.name }) { |names, column| names & column } }
 
   loop do
-    singletons, multiples = position_name_lists
-      .each_with_index
-      .partition { |names, _| names.size == 1 }
-    break if multiples.size == 0
-    singletons.map! { |name, _| name[0] }.flatten
-    multiples.each { |_, i| position_name_lists[i] -= singletons }
+    resolved = position_names
+      .filter { |names| names.size == 1 }
+      .flatten
+    break if resolved.size == position_names.size
+    position_names
+      .map! { |names| names.size == 1 ? names : names - resolved }
   end
 
-  position_name_lists.flatten
+  position_names
+    .flatten
     .zip(your_ticket)
     .filter { |name, _| name.start_with?("departure") }
     .map { |_, number| number }
