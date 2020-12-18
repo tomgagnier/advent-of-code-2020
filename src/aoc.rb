@@ -1,5 +1,7 @@
 # Shared Advent of Code Utilities
 
+require 'set'
+
 # IO ##################################################################
 
 def read_lines(file_path)
@@ -71,7 +73,7 @@ end
 
 # A  in space with a directed magnitude
 class Ray
-
+  include Enumerable
 
   def initialize(slope:, origin: xy(0, 0))
     @slope = slope
@@ -136,3 +138,4 @@ class Grid
       .filter { |x, y| x.between?(0, max_i) && y.between?(0, max_j) }
   end
 end
+
