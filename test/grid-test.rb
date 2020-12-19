@@ -19,5 +19,4 @@ assert_equal('4', grid[3][4])
 
 assert_equal(GRID_4_BY_5.chomp, grid.to_s)
 
-p grid.adjacent_to(0, 0)
 

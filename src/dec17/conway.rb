@@ -1,21 +1,5 @@
 require_relative '../aoc'
 
-# @param point the center of the neighborhood
-# @return the neighborhood of the point (any dimension), including the point itself
-def neighborhood_of(point)
-  dimension = point.size
-  neighborhood_range = 0...3 ** dimension
-  neighborhood_range
-    .map { |i|
-      (0...dimension).reduce([i]) { |a, i|
-        quotient = a[-1] / 3
-        a[-1] = a[-1] % 3 + point[i] - 1
-        a << quotient unless a.size == dimension
-        a
-      }
-    }
-end
-
 # @param active - a Set of active points in a Conway game
 # @param rule - activate the point given the active status and number of active neighbors
 # @return the set of next Conway generation of active points

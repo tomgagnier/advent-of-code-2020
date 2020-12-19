@@ -60,12 +60,13 @@ def part_2(lines)
 end
 
 p ChineseRemainderTheorem.extended_gcd(30, 90)
+
 # 295
 # 1068781
 # 2238
 # 560214575859998
-# %w(test-input.txt input.txt).each do |file_path|
-#   lines = read_lines(file_path)
-#   part_1(lines)
-#   part_2(lines[1])
-# end
+%w(test-input.txt input.txt).each do |file_path|
+  lines = read_lines(file_path)
+  part_1(lines)
+  part_2(lines[1])
+end

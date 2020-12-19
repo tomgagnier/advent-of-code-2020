@@ -117,5 +117,3 @@ end
 
 evaluate('test-input.txt')
 evaluate('input.txt')
-
-
