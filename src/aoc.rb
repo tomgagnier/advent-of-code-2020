@@ -30,7 +30,8 @@ end
 # Binary ###############################################################
 
 # Translate a string representation of a bitfield to an integer
-def binary_code_to_i(code:, zero_char: '0')
+def
+binary_code_to_i(code:, zero_char: '0')
   code.each_char.map { |c| c == zero_char ? 0 : 1 }.join.to_i(2)
 end
 
