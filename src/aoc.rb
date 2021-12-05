@@ -1,4 +1,5 @@
 # Shared Advent of Code Utilities
+# frozen_string_literal: true
 
 require 'set'
 
@@ -23,8 +24,14 @@ end
 
 # Strings ##############################################################
 
-def to_symbol(s)
-  s.strip.gsub(' ', '_').to_sym
+def to_symbol(string)
+  string.strip.gsub(' ', '_').to_sym
+end
+
+# Utilities ############################################################
+
+def deep_copy(marshalable)
+  Marshal.load(Marshal.dump(marshalable))
 end
 
 # Binary ###############################################################
